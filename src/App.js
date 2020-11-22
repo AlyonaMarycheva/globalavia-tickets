@@ -1,25 +1,52 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function App() {
+
+export const App = () => {
+  const [tickets, setTickets] = useState([]);
+
+  const getTicket = () => {
+    axios
+      .get('https://localhost:5001/flights')
+      .then(response => {
+        console.log(response.data)
+        setTickets(response.data.map(ticket => {
+          return {
+            ...ticket,
+            departureTime: new Date(ticket.departureDate).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+            arrivalTime: new Date(ticket.arrivalDate).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+            departureDate: new Date(ticket.departureDate).toLocaleDateString(),
+            arrivalDate: new Date(ticket.arrivalDate).toLocaleDateString(),
+            period: new Date(ticket.departureDate).getMinutes() - new Date(ticket.arrivalDate).getMinutes()
+          }
+        }
+        ))
+      })
+  };
+  useEffect(getTicket, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container">
+      <ul className="ticket-list">
+      {tickets.map(ticket => 
+        <li className="ticket-info" key={ticket.departureDate}>
+          <div>
+            <div className="time">{ticket.departureTime}</div>
+            <div>{ticket.departureCity}</div>
+            <div>{ticket.departureDate}</div>
+          </div>
+          <div className="period">
+            В пути: {Math.floor(ticket.period/60)} ч. {ticket.period%60} мин.
+          </div>
+          <div>
+            <div className="time">{ticket.arrivalTime}</div>
+            <div>{ticket.arrivalCity}</div>
+            <div>{ticket.arrivalDate}</div>
+          </div>
+        </li>)}
+      </ul>
     </div>
   );
 }
 
-export default App;
