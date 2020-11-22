@@ -18,7 +18,7 @@ export const App = () => {
             arrivalTime: new Date(ticket.arrivalDate).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
             departureDate: new Date(ticket.departureDate).toLocaleDateString(),
             arrivalDate: new Date(ticket.arrivalDate).toLocaleDateString(),
-            period: new Date(ticket.departureDate).getMinutes() - new Date(ticket.arrivalDate).getMinutes()
+            period: new Date(ticket.arrivalDate) - new Date(ticket.departureDate)
           }
         }
         ))
@@ -37,7 +37,7 @@ export const App = () => {
             <div>{ticket.departureDate}</div>
           </div>
           <div className="period">
-            В пути: {Math.floor(ticket.period/60)} ч. {ticket.period%60} мин.
+            В пути: {new Date(ticket.period).getHours() - 3} ч.  {new Date(ticket.period).getMinutes()} мин.
           </div>
           <div>
             <div className="time">{ticket.arrivalTime}</div>
