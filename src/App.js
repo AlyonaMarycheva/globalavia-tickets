@@ -8,7 +8,7 @@ export const App = () => {
 
   const getTicket = () => {
     axios
-      .get('https://localhost:5001/flights')
+      .get('http://localhost:5000/flights')
       .then(response => {
         console.log(response.data)
         setTickets(response.data.map(ticket => {
