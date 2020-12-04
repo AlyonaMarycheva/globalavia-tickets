@@ -9,7 +9,26 @@
 }
 
 .ticket-list {
-  width: 40rem;
+  width: 50rem;
+}
+
+.city-inputs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.sorting-type {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: gray;
+  font-size: 1.2rem;
+}
+
+.city-input {
+  flex-basis: 48%;
 }
 
 .ticket-info {
@@ -27,5 +46,9 @@
 
 .time{
   font-size: 2rem;
+}
+
+.price {
+  font-size: 1.5rem;
 }
 
