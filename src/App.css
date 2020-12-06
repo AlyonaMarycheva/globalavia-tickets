@@ -1,54 +1,10 @@
 .app-container {
   --color-primary: #419A94;
-
-  max-width: 120rem;
+  width: 50rem;
   margin: 3rem auto;
   display: flex;
   justify-content: center;
-
-}
-
-.ticket-list {
-  width: 50rem;
-}
-
-.city-inputs {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.sorting-type {
-  margin-bottom: 20px;
-  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  color: gray;
-  font-size: 1.2rem;
-}
-
-.city-input {
-  flex-basis: 48%;
-}
-
-.ticket-info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem;
-  color: var(--color-primary);
-  border-bottom: 1px solid var(--color-primary);
-}
-.ticket-info:hover {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-.time{
-  font-size: 2rem;
-}
-
-.price {
-  font-size: 1.5rem;
 }
 

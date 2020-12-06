@@ -1,0 +1,9 @@
+.info {
+  margin-top: 5rem;
+  color: #419A94;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 5rem;
+}

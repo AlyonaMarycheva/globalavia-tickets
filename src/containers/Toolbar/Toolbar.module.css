@@ -1,0 +1,27 @@
+.tools {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: gray;
+  font-size: 1.2rem;
+  width: 100%;
+}
+
+.transfer {
+  display: flex;
+  align-items: center;
+}
+
+.sorting {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox {
+  margin-right: 0.7rem;
+}
+
+.sortingSelect {
+  margin-left: 0.7rem;
+}
