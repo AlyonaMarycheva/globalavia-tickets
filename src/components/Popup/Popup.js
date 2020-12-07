@@ -8,7 +8,7 @@ export const Popup = () => {
   return (
     <div className={classes.popup}>
       <div className={classes.container}>
-        <div className={classes.header}>Редактирование рейса</div>
+        <div className={classes.header}>Создание рейса</div>
           <div className={classes.item}>
             <Input placeholder="Откуда" />
           </div>
@@ -31,7 +31,7 @@ export const Popup = () => {
         
           <Input placeholder="Цена"/>   
         </div>
-        <button>отправить</button>
+          <button>Создать рейс</button>
         </div>
     </div>
   )

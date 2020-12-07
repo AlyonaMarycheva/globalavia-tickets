@@ -2,12 +2,16 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Toolbar from '../Toolbar/Toolbar';
 import RouteList from '../../components/RouteList/RouteList';
+import FloatingButton from '../../UI/FloatingButton/FloatingButton';
+import FlightTable from '../../components/FlightTable/FlightTable';
 import Info from '../../components/Info/Info';
+import { Popup } from '../../components/Popup/Popup';
 
 const BookingPage = () => {
   const [ routes, setRoutes ] = useState([]);
   const [ sortingParameter, setSortingParameter ] = useState('departureDate');
   const [ requestConfig, setRequestConfig ] = useState({ params: {} });
+  const [ editingFlight, setEditingFlight ] = useState(false);
 
 
   const getRoutes = () => {
@@ -15,7 +19,7 @@ const BookingPage = () => {
     if (Object.keys(requestConfig.params).length) {
       console.log('performing request');
       axios
-      .get('https://globalaviaapi.azurewebsites.net/flights', requestConfig)
+      .get('https://globalaviaapi.azurewebsites.net/operator/flights', requestConfig)
       .then(response => {
         console.log(response)
         setRoutes(response.data);
@@ -24,6 +28,10 @@ const BookingPage = () => {
   };
 
   useEffect(getRoutes, [requestConfig]);
+
+  const handleAddFlightClick = () => {
+    setEditingFlight(true);
+  };
 
   const sortRoutes = (tickets) => {
     if (sortingParameter === 'duration' || sortingParameter === 'price') {
@@ -53,12 +61,26 @@ const BookingPage = () => {
   };
 
   const sortedRoutes = sortRoutes(routes);
+
+  // return (
+  //   <div className="app-container">
+  //     <Toolbar formRequestConfig={setRequestConfig} setSortingParameter={setSortingParameter} />
+  //     {Object.keys(requestConfig.params).length
+  //       ? <RouteList routes={sortedRoutes} />
+  //       : <Info />}
+  //   </div>
+  // );
+
   return (
     <div className="app-container">
+      {editingFlight
+        ? <Popup />
+        : null}
       <Toolbar formRequestConfig={setRequestConfig} setSortingParameter={setSortingParameter} />
       {Object.keys(requestConfig.params).length
-        ? <RouteList routes={sortedRoutes} />
+        ? <FlightTable routes={sortedRoutes} />
         : <Info />}
+      <FloatingButton onClick={handleAddFlightClick}>+</FloatingButton>
     </div>
   );
 };
