@@ -9,17 +9,17 @@ const Flight = ({ flightInfo }) => {
   return (
     <li className={styles.FlightInfo}>
           <div>
-            <div className={styles.Time}>{setTime(flightInfo.DepartureDate)}</div>
-            <div>{flightInfo.from}</div>
-            <div>{setDate(flightInfo.DepartureDate)}</div>
+            <div className={styles.Time}>{setTime(flightInfo.departureDate)}</div>
+            <div>{flightInfo.departureCity}</div>
+            <div>{setDate(flightInfo.departureDate)}</div>
           </div>
           <div>
-            В пути: {new Date(setPeriod(flightInfo.DepartureDate, flightInfo.ArrivalDate)).getHours() - 3} ч.  {new Date(setPeriod(flightInfo.DepartureDate, flightInfo.ArrivalDate)).getMinutes()} мин.
+            В пути: {new Date(setPeriod(flightInfo.departureDate, flightInfo.arrivalDate)).getHours() - 3} ч.  {new Date(setPeriod(flightInfo.departureDate, flightInfo.arrivalDate)).getMinutes()} мин.
           </div>
           <div>
-            <div className={styles.Time}>{setTime(flightInfo.ArrivalDate)}</div>
-            <div>{flightInfo.to}</div>
-            <div>{setDate(flightInfo.ArrivalDate)}</div>
+            <div className={styles.Time}>{setTime(flightInfo.arrivalDate)}</div>
+            <div>{flightInfo.arrivalCity}</div>
+            <div>{setDate(flightInfo.arrivalDate)}</div>
           </div>
     </li>
     

@@ -3,7 +3,7 @@ import styles from './Route.module.css';
 
 const Route = ({ routeInfo }) => {
 
-  const flightList = routeInfo.fullFlights.map(f => <Flight key={f.Id} flightInfo={f} />)
+  const flightList = routeInfo.fullFlights.map(f => <Flight key={f.id} flightInfo={f} />)
   const durationTimes = routeInfo.duration.split(':');
 
   return (
