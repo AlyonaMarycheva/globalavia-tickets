@@ -1,0 +1,19 @@
+.Route {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  color: #419A94;
+  border-bottom: 1px solid #419A94;
+}
+
+.Route:hover {
+  background-color: #419A94;
+  color:white;
+}
+
+.RouteInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
