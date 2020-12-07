@@ -50,11 +50,8 @@ button {
   background-color: var(--color-primary);
   color: white;
   border:none;
-  outline: none;
   height: 4rem;
 }
 
-button:hover {
-  background-color: #4cbbb4;
-  cursor: pointer;
-}
+button:focus { outline: none; }
+

@@ -54,10 +54,10 @@ const Toolbar = ({ formRequestConfig, setSortingParameter }) => {
         <div className={classes.sorting}>
           <span>Сортировать по: </span>
           <select className={classes.sortingSelect} onChange={(e) => setSortingParameter(e.target.value)}>
+            <option value="price">по цене</option>
             <option value="departureDate">по дате отправления</option>
             <option value="arrivalDate">по дате прибытия</option>
             <option value="duration">по времени в пути</option>
-            <option value="price">по цене</option>
           </select>
         </div>
       </div>

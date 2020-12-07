@@ -1,0 +1,15 @@
+.flightTable {
+  border-collapse: collapse;
+  border-radius: 10px;
+  color: #419A94;
+}
+
+.flightTable td, th {
+  padding: 1rem;
+  border: 1px solid #419A94;
+}
+
+.flightTable tr:hover {
+  background-color:#419A94;
+  color: white;
+}
