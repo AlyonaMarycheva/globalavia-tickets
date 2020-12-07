@@ -37,6 +37,7 @@
 
 .dateTime > input {
   display: flex;
+
 }
 
 .firstInput{
@@ -50,8 +51,11 @@ button {
   background-color: var(--color-primary);
   color: white;
   border:none;
+  outline: none;
   height: 4rem;
 }
 
-button:focus { outline: none; }
-
+button:hover {
+  background-color: #4cbbb4;
+  cursor: pointer;
+}

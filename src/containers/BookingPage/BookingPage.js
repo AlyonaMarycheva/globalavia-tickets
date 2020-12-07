@@ -80,11 +80,7 @@ const BookingPage = () => {
       {Object.keys(requestConfig.params).length
         ? <FlightTable routes={sortedRoutes} />
         : <Info />}
-<<<<<<< HEAD
-      {/* <Popup/> */}
-=======
       <FloatingButton onClick={handleAddFlightClick}>+</FloatingButton>
->>>>>>> f37f01b0b034be3c9878818e649e78a2a1b85fd5
     </div>
   );
 };
