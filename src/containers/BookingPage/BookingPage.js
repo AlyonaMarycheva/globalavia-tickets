@@ -3,6 +3,7 @@ import axios from 'axios';
 import Toolbar from '../Toolbar/Toolbar';
 import RouteList from '../../components/RouteList/RouteList';
 import Info from '../../components/Info/Info';
+import { Popup } from '../../components/Popup/Popup'
 
 const BookingPage = () => {
   const [ routes, setRoutes ] = useState([]);
@@ -59,6 +60,7 @@ const BookingPage = () => {
       {Object.keys(requestConfig.params).length
         ? <RouteList routes={sortedRoutes} />
         : <Info />}
+      {/* <Popup/> */}
     </div>
   );
 };
