@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import Input from './UI/Input/Input';
+import { Popup } from './components/Popup/Popup.js'
 import axios from 'axios';
 
 export const App = () => {
@@ -15,7 +16,7 @@ export const App = () => {
 
   const getTicket = () => {
     axios
-      .get('https://globalaviaapi.azurewebsites.net/flights')
+      .get('https://globalaviaapi.azurewebsites.net/operator/flights')
       .then(response => {
         setTickets(response.data.sort((a, b) => new Date(a.departureDate) - new Date(b.departureDate)));
       })
@@ -106,6 +107,7 @@ export const App = () => {
           <div className="price">от {ticket.price} р.</div>
         </li>)}
       </ul>
+      {/* <Popup /> */}
     </div>
   );
 }
