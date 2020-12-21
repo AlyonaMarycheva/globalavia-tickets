@@ -7,17 +7,3 @@
 .input {
   margin-right: 1rem;
 }
-
-.searchButton {
-  width: 10rem;
-  color: white;
-  background-color: #419A94;
-  border: none;
-  outline:none;
-  border-radius: 6px;
-}
-
-.searchButton:hover {
-  background-color: #4cbbb4;
-  cursor: pointer;
-}

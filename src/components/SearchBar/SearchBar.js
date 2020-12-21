@@ -1,5 +1,6 @@
 import Input from '../../UI/Input/Input';
-import classes from './SearchBar.module.css'
+import Button from '../../UI/Button/Button';
+import classes from './SearchBar.module.css';
 
 const SearchBar = ({ fromPoint, changeFromPointHandler, toPoint, changeToPointHandler, handleSearchClick }) => {
   return (
@@ -16,7 +17,7 @@ const SearchBar = ({ fromPoint, changeFromPointHandler, toPoint, changeToPointHa
           changed={changeToPointHandler}
           placeholder='Куда'/>
       </div>
-      <button className={classes.searchButton} onClick={handleSearchClick}>Найти</button>
+      <Button text="Найти" clicked={handleSearchClick}/>
     </div>
   );
 };
