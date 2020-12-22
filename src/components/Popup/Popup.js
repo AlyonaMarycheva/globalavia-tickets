@@ -3,13 +3,26 @@ import classes from './Popup.module.css';
 
 import Input from '../../UI/Input/Input'
 
-export const Popup = () => {
+export const Popup = ({setIsOpen, routes, setRoutes}) => {
   const [ fromPoint, setFromPoint ] = useState('');
   const [ toPoint, setToPoint ] = useState('');
   const [ arrivalDate, setArrivalDate ] = useState('');
   const [ departureDate, setDepartureDate ] = useState('');
   const [ lowPrice, setLowPrice ] = useState('');
   const [ highPrice, setHighPrice ] = useState('');
+
+  const addRoute = (event) => {
+    event.preventDefault();
+    const routeObject = {
+      departureCityId : 5,
+      arrivalCityId : 2,
+      departureDate : "2020-12-17 09:00",
+      arrivalDate : "2020-12-24 12:25",
+      Prices : [8756, 10653]
+};
+    setRoutes(routes.concat(routeObject));
+    closePopup();
+  }
 
   const changeFromPointHandler = (e) => {
     setFromPoint(e.target.value);
@@ -34,61 +47,78 @@ export const Popup = () => {
   const changeHighPriceHandler = (e) => {
     setHighPrice (e.target.value);
   };
+  const closePopup = () => {
+    setIsOpen(false);
+    // setEditedUser(null);
+  }
 
   return (
-    <div className={classes.popup}>
-      <div className={classes.container}>
-        <div className={classes.header}>Создание рейса</div>
+    <div>
+     <div className={classes.backdrop} onClick={closePopup}></div>
+      <div className={classes.popup}>
+        <div className={classes.header}>Создание рейса
+        <button className={classes.closeButton} onClick={closePopup}>×</button>
+        </div>
+        <form className={classes.content} onSubmit={addRoute}>
+          <div className={classes.item}>
+              <Input 
+                value={fromPoint} 
+                changed={changeFromPointHandler}
+                placeholder="Откуда" />
+          </div>
+
+          <div className={classes.item}>
+            <div className={classes.dateTime}>
+              <div className={classes.firstInput}>           
+                <Input 
+                  value={arrivalDate} 
+                  changed={changeArrivalDateHandler}
+                  type="date" />
+              </div>
+              <Input 
+                type="time" />
+            </div>
+          </div>
+
           <div className={classes.item}>
             <Input 
-              value={fromPoint} 
-              changed={changeFromPointHandler}
-              placeholder="Откуда" />
+              value={toPoint} 
+              changed={changeToPointHandler}
+              placeholder="Куда"/>
           </div>
-        <div className={classes.dateTime}>
-          <div className={classes.firstInput}>           
+
+          <div className={classes.item}>
+            <div className={classes.dateTime}>
+              <div className={classes.firstInput}> 
+                <Input 
+                  type="date" 
+                  value={departureDate} 
+                  changed={changeDepartureDateHandler}/>
+              </div>
+              <Input type="time"/>
+            </div>
+          </div>
+          <div className={classes.item}>
             <Input 
-              value={arrivalDate} 
-              changed={changeArrivalDateHandler}
-              type="date" />
+              type="number"
+              placeholder="Цена комфорт+"
+              value={highPrice} 
+              changed={changeHighPriceHandler}
+              />   
           </div>
-          <Input 
-            type="time" />
-        </div>
-        <div className={classes.item}>
-          <Input 
-            value={toPoint} 
-            changed={changeToPointHandler}
-            placeholder="Куда"/>
-        </div>
-        <div className={classes.dateTime}>
-          <div className={classes.firstInput}> 
+          <div className={classes.item}>
             <Input 
-              type="date" 
-              value={departureDate} 
-              changed={changeDepartureDateHandler}/>
+              type="number"
+              placeholder="Цена эконом"
+              value={lowPrice} 
+              changed={changeLowPriceHandler}
+              />   
           </div>
-          <Input type="time"/>
-        </div>
-        <div className={classes.item}>
-          <Input 
-            type="number"
-            placeholder="Цена комфорт+"
-            value={highPrice} 
-            changed={changeHighPriceHandler}
-            />   
-        </div>
-        <div className={classes.item}>
-          <Input 
-            type="number"
-            placeholder="Цена эконом"
-            value={lowPrice} 
-            changed={changeLowPriceHandler}
-            />   
-        </div>
-          <button>Создать рейс</button>
-        </div>
+            <button type="submit" className={classes.button}>Создать рейс</button>
+        </form>
+      </div>  
     </div>
+    
   )
 
 }

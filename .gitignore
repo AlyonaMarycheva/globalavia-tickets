@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+post-route.rest
 
 # testing
 /coverage
