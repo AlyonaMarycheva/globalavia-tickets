@@ -1,0 +1,50 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 5rem;
+  padding: 1rem 0;
+  color: white;
+  margin-bottom: 3rem;
+  position: sticky;
+  top: 0;
+  background-color: #419A94;
+}
+
+.content {
+  width: 50rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  margin-left: 1rem;
+  border:none;
+  background: none;
+  width: 2rem;
+}
+.button:focus { 
+  outline: none; 
+}
+
+.svg {
+  color: white;
+}
+
+.svg:hover {
+  color: rgb(231, 229, 229);
+}
+
+.link {
+  color:white;
+  text-decoration: none;
+  margin-right: 2rem;
+}
+.link:hover {
+  color: rgb(231, 229, 229);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
