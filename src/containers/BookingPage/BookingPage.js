@@ -8,12 +8,12 @@ const BookingPage = () => {
   const [ routes, setRoutes ] = useState([]);
   const [ sortingParameter, setSortingParameter ] = useState('departureDate');
   const [ requestConfig, setRequestConfig ] = useState({ params: {} });
+  const [ cities, setCities ] = useState([]);
 
 
   const getRoutes = () => {
     
     if (Object.keys(requestConfig.params).length) {
-      console.log('performing request');
       axios
       .get('https://globalaviaapi.azurewebsites.net/flights', requestConfig)
       .then(response => {
@@ -23,6 +23,15 @@ const BookingPage = () => {
     }
   };
 
+  const getCities = () => {
+    axios
+      .get('https://globalaviaapi.azurewebsites.net/cities')
+      .then(response => {
+        setCities(response.data);
+      });
+  }
+
+  useEffect(getCities, []);
   useEffect(getRoutes, [requestConfig]);
 
 
@@ -57,7 +66,7 @@ const BookingPage = () => {
 
   return (
     <div className="app-container">
-      <Toolbar formRequestConfig={setRequestConfig} setSortingParameter={setSortingParameter} />
+      <Toolbar cities={cities} formRequestConfig={setRequestConfig} setSortingParameter={setSortingParameter} extended />
       {Object.keys(requestConfig.params).length
         ? <RouteList routes={sortedRoutes} />
         : <Info />}

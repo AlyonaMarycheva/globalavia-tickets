@@ -2,17 +2,19 @@ import { useState } from 'react';
 import classes from './Toolbar.module.css';
 import SearchBar from '../../components/SearchBar/SearchBar';
 
-const Toolbar = ({ formRequestConfig, setSortingParameter }) => {
+const Toolbar = ({ formRequestConfig, setSortingParameter, extended, cities }) => {
   const [ fromPoint, setFromPoint ] = useState('');
   const [ toPoint, setToPoint ] = useState('');
   const [ hasTransfers, setHasTransfers ] = useState(false);
 
   const changeFromPointHandler = (e) => {
-    setFromPoint(e.target.value);
+    const [ city ] = cities.filter(c => c.id === +e.target.value);
+    setFromPoint(city.name);
   };
 
   const changeToPointHandler = (e) => {
-    setToPoint(e.target.value);
+    const [ city ] = cities.filter(c => c.id === +e.target.value);
+    setToPoint(city.name);
   };
 
   const handleTransferChange = (e) => {
@@ -42,25 +44,28 @@ const Toolbar = ({ formRequestConfig, setSortingParameter }) => {
   return (
     <>
       <SearchBar
+        cities={cities}
         fromPoint={fromPoint}
         changeFromPointHandler={changeFromPointHandler}
         toPoint={toPoint}
         changeToPointHandler={changeToPointHandler}
         handleSearchClick={handleSearchClick} />
-      <div className={classes.tools}>
-        <div className={classes.transfer}>
-          <input className={classes.checkbox} onChange={handleTransferChange} type='checkbox' checked={hasTransfers} /> Без пересадок
-        </div>
-        <div className={classes.sorting}>
-          <span>Сортировать по: </span>
-          <select className={classes.sortingSelect} onChange={(e) => setSortingParameter(e.target.value)}>
-            <option value="price">по цене</option>
-            <option value="departureDate">по дате отправления</option>
-            <option value="arrivalDate">по дате прибытия</option>
-            <option value="duration">по времени в пути</option>
-          </select>
-        </div>
-      </div>
+      {extended
+        ? <div className={classes.tools}>
+            <div className={classes.transfer}>
+              <input className={classes.checkbox} onChange={handleTransferChange} type='checkbox' checked={hasTransfers} /> Без пересадок
+            </div>
+            <div className={classes.sorting}>
+              <span>Сортировать по: </span>
+              <select className={classes.sortingSelect} onChange={(e) => setSortingParameter(e.target.value)}>
+                <option value="price">по цене</option>
+                <option value="departureDate">по дате отправления</option>
+                <option value="arrivalDate">по дате прибытия</option>
+                <option value="duration">по времени в пути</option>
+              </select>
+            </div>
+          </div>
+        : null}
     </>
   )
 };

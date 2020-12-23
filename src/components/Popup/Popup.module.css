@@ -47,21 +47,6 @@
   width: 100%
 }
 
-.button {
-  width: 13rem;
-  align-self: flex-end;
-  background-color: var(--color-primary);
-  color: white;
-  border:none;
-  outline: none;
-  height: 4rem;
-}
-
-.button:hover {
-  background-color: #4cbbb4;
-  cursor: pointer;
-}
-
 .closeButton{
   background: none;
   border: none;

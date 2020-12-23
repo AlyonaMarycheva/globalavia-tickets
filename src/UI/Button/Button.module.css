@@ -1,5 +1,6 @@
 .button {
   width: 10rem;
+  min-height: 4rem;
   color: white;
   background-color: #419A94;
   border: none;
