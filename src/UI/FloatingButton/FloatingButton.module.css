@@ -10,8 +10,8 @@
   border-radius: 50%;
   cursor: pointer;
   position: fixed;
-  right: 50rem;
-  bottom: 5rem;
+  right: 2rem;
+  bottom: 2rem;
 }
 
 .floatingButton:hover {

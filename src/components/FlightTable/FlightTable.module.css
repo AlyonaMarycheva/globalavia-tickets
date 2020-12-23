@@ -13,3 +13,7 @@
   background-color:#419A94;
   color: white;
 }
+
+.button {
+  cursor: pointer;
+}
