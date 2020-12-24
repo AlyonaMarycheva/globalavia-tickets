@@ -9,10 +9,10 @@ const OperatorPage = () => {
   const [ routes, setRoutes ] = useState([]);
   const [ sortingParameter, setSortingParameter ] = useState('departureDate');
   const [ requestConfig, setRequestConfig ] = useState({ params: {} });
-  const [ editingFlight, setEditingFlight ] = useState(false);
+  // const [ editingFlight, setEditingFlight ] = useState(null);
   const [ popupIsOpen, setPopupIsOpen ] = useState(false);
   const [ cities, setCities ] = useState([]);
-  const [ popupType, setPopupType ] = useState('create');
+  // const [ popupType, setPopupType ] = useState('create');
   const [ editingFlightId, setEditingFlightId ] = useState(null);
 
 
@@ -20,7 +20,9 @@ const OperatorPage = () => {
       axios
       .get('https://globalaviaapi.azurewebsites.net/operator/flights', requestConfig)
       .then(response => {
-        setRoutes(response.data);
+        response.data.length ?
+        setRoutes(response.data)
+        : alert("Ничего не найдено");
       });
   };
 
@@ -36,10 +38,7 @@ const OperatorPage = () => {
 
   useEffect(getRoutes, [requestConfig]);
 
-  const handleAddFlightClick = () => {
-    setPopupType('create');
-    setPopupIsOpen(true);
-  };
+  const handleAddFlightClick = () => setPopupIsOpen(true);
 
   const sortRoutes = (tickets) => {
     if (sortingParameter === 'duration' || sortingParameter === 'price') {
@@ -77,8 +76,7 @@ const OperatorPage = () => {
     .catch(error => alert('Произошла ошибка во время удаления рейса.'));
   };
 
-  const handleChangeClick = (id) => {
-    setPopupType('edit');
+  const handleChangeClick = id => {
     setEditingFlightId(id);
     setPopupIsOpen(true)
   }
@@ -87,10 +85,19 @@ const OperatorPage = () => {
 
   return (
     <div className="app-container">
-      {popupIsOpen ? <Popup type='edit' flightId={editingFlightId} cities={cities} setIsOpen={setPopupIsOpen} routes={routes} setRoutes={setRoutes}/> : null}
+      {popupIsOpen ? <Popup type='edit' 
+      editingFlightId={editingFlightId} 
+      setEditingFlightId={setEditingFlightId}
+      cities={cities} 
+      setIsOpen={setPopupIsOpen} 
+      routes={routes} 
+      setRoutes={setRoutes}/> 
+      : null}
+     
       <Toolbar cities={cities} formRequestConfig={setRequestConfig} setSortingParameter={setSortingParameter} />
         <FlightTable onChangeClick={handleChangeClick} onDeleteClick={deleteFlight} routes={sortedRoutes} />
       <FloatingButton onClick={handleAddFlightClick}>+</FloatingButton>
+  
     </div>
   );
 };

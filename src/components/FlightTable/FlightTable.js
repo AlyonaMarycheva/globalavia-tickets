@@ -1,7 +1,6 @@
 import classes from './FlightTable.module.css';
 
 const FlightTable = ({ routes, onDeleteClick, onChangeClick }) => {
-  console.log(routes)
   return (
     <table className={classes.flightTable}>
       <thead>
@@ -23,7 +22,7 @@ const FlightTable = ({ routes, onDeleteClick, onChangeClick }) => {
             <td>{r.arrivalDate}</td>
             <td>
               <div>Комфорт: {r.prices[0]} руб.</div>
-              <div>Эконом: {r.prices[0]} руб.</div>
+              <div>Эконом: {r.prices[1]} руб.</div>
             </td>
             <td>
               <div onClick={() => onChangeClick(r.id)} className={classes.button}>Изменить</div>

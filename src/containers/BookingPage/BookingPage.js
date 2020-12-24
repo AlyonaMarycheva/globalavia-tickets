@@ -10,7 +10,6 @@ const BookingPage = () => {
   const [ requestConfig, setRequestConfig ] = useState({ params: {} });
   const [ cities, setCities ] = useState([]);
 
-
   const getRoutes = () => {
     
     if (Object.keys(requestConfig.params).length) {
@@ -18,7 +17,9 @@ const BookingPage = () => {
       .get('https://globalaviaapi.azurewebsites.net/flights', requestConfig)
       .then(response => {
         console.log(response)
-        setRoutes(response.data);
+        response.data.length ?
+        setRoutes(response.data)
+        : alert("Ничего не найдено");
       })
     }
   };

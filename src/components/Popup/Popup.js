@@ -5,7 +5,8 @@ import Input from '../../UI/Input/Input';
 import Select from '../../UI/Select/Select';
 import axios from 'axios';
 
-export const Popup = ({ type, setIsOpen, routes, setRoutes, cities, flightId }) => {
+export const Popup = ({ editingFlightId, setEditingFlightId, setIsOpen, routes, setRoutes, cities}) => {
+  console.log(editingFlightId)
   const [ fromPointId, setFromPointId ] = useState('');
   const [ toPointId, setToPointId ] = useState('');
   const [ arrivalDate, setArrivalDate ] = useState('');
@@ -16,10 +17,11 @@ export const Popup = ({ type, setIsOpen, routes, setRoutes, cities, flightId }) 
   const [ highPrice, setHighPrice ] = useState('');
 
   useEffect(() => {
-    if (type === 'edit') {
+    if (editingFlightId) 
       axios
-        .get(`https://globalaviaapi.azurewebsites.net/operator/flights/${flightId}`)
+        .get(`https://globalaviaapi.azurewebsites.net/operator/flights/${editingFlightId}`)
         .then(({ data }) => {
+          console.log(data)
           const [ arDate, arTime ] = data.arrivalDate.split('T');
           const [ depDate, depTime ] = data.departureDate.split('T');
           setArrivalDate(arDate);
@@ -28,8 +30,9 @@ export const Popup = ({ type, setIsOpen, routes, setRoutes, cities, flightId }) 
           setDepartureDate(depDate);
           setFromPointId(data.departureCityId);
           setToPointId(data.arrivalCityId);
+          setLowPrice(data.prices[0]);
+          setHighPrice(data.prices[1]);
         });
-    }
   }, [])
   
 
@@ -40,12 +43,13 @@ export const Popup = ({ type, setIsOpen, routes, setRoutes, cities, flightId }) 
       arrivalCityId : toPointId,
       departureDate : departureDate + 'T' + departureTime,
       arrivalDate : arrivalDate + 'T' + arrivalTime,
-      Prices : [lowPrice, highPrice]
+      prices : [lowPrice, highPrice]
     };
 
     axios
       .post('https://globalaviaapi.azurewebsites.net/operator/flights', newFlight)
       .then(res => {
+        console.log('creation response', res)
         const [ fromCity ] = cities.filter(c => c.id === +newFlight.departureCityId);
         const [ toCity ] = cities.filter(c => c.id === +newFlight.arrivalCityId);
     
@@ -55,16 +59,51 @@ export const Popup = ({ type, setIsOpen, routes, setRoutes, cities, flightId }) 
           arrivalCity: toCity.name,
           departureDate: newFlight.departureDate,
           arrivalDate: newFlight.arrivalDate,
-          price: newFlight.Prices[0]
+          prices: newFlight.prices
         }));
         alert(`Рейс ${fromCity.name}-${toCity.name} был успешно добавлен.`);
       })
       .catch(error => {
         alert('Произошла непредвиденная ошибка.')
       });
-
+    if (editingFlightId)
+      setEditingFlightId(null);
     closePopup();
   }
+
+  const editFlight = (event) => {
+    event.preventDefault();
+    const editedFlight = {
+      departureCityId : fromPointId,
+      arrivalCityId : toPointId,
+      departureDate : departureDate + 'T' + departureTime,
+      arrivalDate : arrivalDate + 'T' + arrivalTime,
+      prices : [lowPrice, highPrice]
+    };
+
+    axios
+      .put(`https://globalaviaapi.azurewebsites.net/operator/flights/${editingFlightId}`, editedFlight)
+      .then(res => {
+        const [ fromCity ] = cities.filter(c => c.id === +editedFlight.departureCityId);
+        const [ toCity ] = cities.filter(c => c.id === +editedFlight.arrivalCityId);
+    
+        setRoutes(routes.concat({
+          id: res.data.Id,
+          departureCity: fromCity.name,
+          arrivalCity: toCity.name,
+          departureDate: editedFlight.departureDate,
+          arrivalDate: editedFlight.arrivalDate,
+          prices: editedFlight.prices
+        }));
+        alert(`Рейс ${fromCity.name}-${toCity.name} был успешно изменен.`);
+      })
+      .catch(error => {
+        alert('Произошла непредвиденная ошибка.')
+      });
+    setEditingFlightId(null);
+    closePopup();
+  }
+
 
   const changeFromPointHandler = (e) => {
     setFromPointId(e.target.value);
@@ -97,7 +136,10 @@ export const Popup = ({ type, setIsOpen, routes, setRoutes, cities, flightId }) 
   const changeHighPriceHandler = (e) => {
     setHighPrice (+e.target.value);
   };
+
   const closePopup = () => {
+    if (editingFlightId)
+      setEditingFlightId(null);
     setIsOpen(false);
   }
 
@@ -106,20 +148,20 @@ export const Popup = ({ type, setIsOpen, routes, setRoutes, cities, flightId }) 
      <div className={classes.backdrop} onClick={closePopup}></div>
       <div className={classes.popup}>
         <div className={classes.header}>
-          {type === 'create'
-            ? 'Создание рейса'
-            : 'Изменение рейса'
+          {editingFlightId 
+            ? 'Изменение рейса'
+            : 'Создание рейса'
           }
         <button className={classes.closeButton} onClick={closePopup}>×</button>
         </div>
-        <form className={classes.content} onSubmit={createFlight}>
+        <form className={classes.content} onSubmit={editingFlightId ? editFlight : createFlight}>
           <div className={classes.item}>
               <Select
                 value={toPointId}
                 options={cities} 
                 onChange={changeFromPointHandler}
                 placeholder="Откуда"
-                required />
+              />
           </div>
 
           <div className={classes.item}>
@@ -133,7 +175,7 @@ export const Popup = ({ type, setIsOpen, routes, setRoutes, cities, flightId }) 
               </div>
               <Input
                 value={arrivalTime}
-                changed={changeDepartureTimeHandler}
+                changed={changeArrivalTimeHandler}
                 type="time"
                 required />
             </div>
@@ -145,7 +187,7 @@ export const Popup = ({ type, setIsOpen, routes, setRoutes, cities, flightId }) 
               options={cities}
               onChange={changeToPointHandler}
               placeholder="Куда"
-              required/>
+              />
           </div>
 
           <div className={classes.item}>
@@ -157,7 +199,7 @@ export const Popup = ({ type, setIsOpen, routes, setRoutes, cities, flightId }) 
                   changed={changeDepartureDateHandler}
                   required />
               </div>
-              <Input value={departureTime} changed={changeArrivalTimeHandler} type="time" required />
+              <Input value={departureTime} changed={changeDepartureTimeHandler} type="time" required />
             </div>
           </div>
           <div className={classes.item}>
@@ -179,7 +221,9 @@ export const Popup = ({ type, setIsOpen, routes, setRoutes, cities, flightId }) 
               required
               />   
           </div>
-            <Button type="submit" text='Создать рейс' className={classes.button} />
+            <div className={classes.button}>
+              <Button type="submit" text={editingFlightId ? 'Изменить': 'Создать'} className={classes.button} />
+            </div>
         </form>
       </div>  
     </div>

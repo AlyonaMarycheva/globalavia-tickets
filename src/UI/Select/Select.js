@@ -1,6 +1,6 @@
 import classes from './Select.module.css';
 
-const Select = ({ options, onChange, placeholder, required }) => {
+const Select = ({ options, onChange, placeholder}) => {
 
   return(
     <select placeholder='Откуда' className={classes.select} onChange={onChange} required>

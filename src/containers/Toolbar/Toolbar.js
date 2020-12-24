@@ -8,13 +8,17 @@ const Toolbar = ({ formRequestConfig, setSortingParameter, extended, cities }) =
   const [ hasTransfers, setHasTransfers ] = useState(false);
 
   const changeFromPointHandler = (e) => {
-    const [ city ] = cities.filter(c => c.id === +e.target.value);
-    setFromPoint(city.name);
+    if (e.target.value) {
+      const [ city ] = cities.filter(c => c.id === +e.target.value);
+      setFromPoint(city.name);
+    }
   };
 
   const changeToPointHandler = (e) => {
+    if (e.target.value) {
     const [ city ] = cities.filter(c => c.id === +e.target.value);
     setToPoint(city.name);
+   }
   };
 
   const handleTransferChange = (e) => {
@@ -25,15 +29,17 @@ const Toolbar = ({ formRequestConfig, setSortingParameter, extended, cities }) =
     const config = {
       params: {}
     };
+    if (fromPoint !== toPoint)
+    {
+        if (fromPoint) {
+        config.params.from = fromPoint;
+      }
 
-    if (fromPoint) {
-      config.params.from = fromPoint;
+      if (toPoint) {
+        config.params.to = toPoint;
+      }
     }
-
-    if (toPoint) {
-      config.params.to = toPoint;
-    }
-
+    else alert('Ничего не найдено')
     if (hasTransfers) {
       config.params.directonly = hasTransfers;
     }
